@@ -15,7 +15,7 @@ class RobotActionController:
         for motor in self.motors.values():
             motor.setPosition(float('inf'))
 
-    def rotate(self, left=True, angle= 3.14159 / 4, angular_speed=0.5):
+    def rotate(self, left=True, angle= 3.14159 / 16, angular_speed=0.5):
         self.consecutive_rotations +=1
 
         if left:
@@ -52,7 +52,7 @@ class RobotActionController:
 
     def perform_action(self,action):
         if action == 0:
-            self.move_forward(distance_meters=0.1)
+            self.move_forward(distance_meters=0.02)
         elif action -1:
             self.rotate(left=True)
         else:

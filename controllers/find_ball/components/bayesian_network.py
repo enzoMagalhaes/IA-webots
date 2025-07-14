@@ -1,6 +1,4 @@
-# TODO: CHANGE THIS TO A REAL BAYESIAN NETWORK STRUCTURE!!!! ( BUILD A TABLE OR USE A BAYESIAN NETWORK FRAMEWORK)
-
-YELLOW_MAX_COLOR_DISTANCE = 0.1822735148427958
+YELLOW_MAX_COLOR_DISTANCE = 0.30
 
 class BayesianNetwork:
     def __init__(self):
@@ -44,7 +42,7 @@ class BayesianNetwork:
         }
 
     def obstacle_detected(self, dist):
-        return dist < 0.078
+        return dist < 0.1
 
     def direction(self, angle):
         if angle <= 0.3359580052493438:

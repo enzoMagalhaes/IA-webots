@@ -17,16 +17,28 @@ robot_controller = RobotActionController(robot, timestep)
 bayesian_network = BayesianNetwork()
 model = CNN()
 
-while robot.step(timestep) != -1:
+def get_next_action():
     img = camera.getImageArray()
     lidar_ranges = lidar.getRangeImage()
-
     dist, angle, yellow_distance = model.predict(img, lidar_ranges)
 
-    if yellow_distance < YELLOW_MAX_COLOR_DISTANCE and dist < 0.3:
-        break
+    if yellow_distance < YELLOW_MAX_COLOR_DISTANCE and dist < 0.050:
+        return "stop"
+    return bayesian_network.next_action(dist, angle, yellow_distance)
 
-    next_action = bayesian_network.next_action(dist, angle, yellow_distance)
-    robot_controller.perform_action(next_action)
+def run():
+    while robot.step(timestep) != -1:
+        action = get_next_action()
+        if action == "stop":
+            return
 
-    print(next_action)
+        if action != 0:
+            next_action = action
+            while next_action != 0:
+                robot_controller.perform_action(action)
+                next_action = get_next_action()
+                if next_action == "stop":
+                    return    
+        else:
+            robot_controller.perform_action(action)
+run()

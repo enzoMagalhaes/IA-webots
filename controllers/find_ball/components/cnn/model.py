@@ -46,11 +46,4 @@ class CNN():
     def predict(self,img,lidar):
         img,lidar =  preprocessing(img,lidar, single=True)
         pdist,pangle,pyellow_distance = self.model.predict([img,lidar])
-        return pdist,pangle,pyellow_distance
-
-
-    
-
-
-
-
+        return pdist.item(),pangle.item(),pyellow_distance.item()
